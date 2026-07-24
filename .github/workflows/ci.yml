@@ -53,7 +53,7 @@ jobs:
       # rather than a published release, so CI tests the code under review.
       - name: Self-scan
         shell: bash
-        run: go run . -invoke -- ./...
+        run: go run . -invoke -github-annotations -- ./...
 
   lint-pr:
     if: github.event_name == 'pull_request'

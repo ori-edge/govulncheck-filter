@@ -1,0 +1,66 @@
+name: CI
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v7
+      - name: Setup mise
+        uses: jdx/mise-action@v4
+      - name: Setup Go
+        uses: actions/setup-go@v7
+        with:
+          cache-dependency-path: |
+            go.sum
+            mise.toml
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v9
+        with:
+          only-new-issues: true
+          args: --issues-exit-code=1 --timeout=5m
+
+  unit-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Run unit tests
+        uses: ori-edge/oge-github-actions/go-unit-test@v0.24.3
+        with:
+          unitTestCommand: go test -race ./...
+          uploadToCodecov: false
+          loginDocker: false
+
+  govulncheck:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v7
+      - name: Setup mise
+        uses: jdx/mise-action@v4
+      - name: Setup Go
+        uses: actions/setup-go@v7
+        with:
+          cache-dependency-path: |
+            go.sum
+            mise.toml
+      # Dogfood: scan this repo with the tool built from the current source,
+      # rather than a published release, so CI tests the code under review.
+      - name: Self-scan
+        shell: bash
+        run: go run . -invoke -- ./...
+
+  lint-pr:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+    steps:
+      - uses: amannn/action-semantic-pull-request@v6
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

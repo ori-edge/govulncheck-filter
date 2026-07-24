@@ -1,0 +1,6 @@
+# Built binary (matches the module/dir name)
+/govulncheck-filter
+
+# Test/coverage output
+*.out
+coverage.txt

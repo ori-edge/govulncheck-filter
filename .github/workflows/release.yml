@@ -1,0 +1,19 @@
+name: release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      version: ${{ steps.tag.outputs.version }}
+    steps:
+      - id: tag
+        uses: ori-edge/oge-github-actions/tag-semver@v0.24.3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN || github.token }}

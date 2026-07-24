@@ -1,0 +1,52 @@
+---
+version: "2"
+run:
+  timeout: 5m
+  allow-parallel-runners: true
+
+linters:
+  enable:
+    - copyloopvar
+    - dupl
+    - durationcheck
+    - errname
+    - errorlint
+    - errcheck
+    - exhaustive
+    - goconst
+    - gocyclo
+    - govet
+    - gocheckcompilerdirectives
+    - ineffassign
+    - lll
+    - modernize
+    - misspell
+    - nakedret
+    - nilnil
+    - prealloc
+    - revive
+    - reassign
+    - staticcheck
+    - unconvert
+    - unparam
+    - unused
+    - wastedassign
+    - wsl_v5
+  settings:
+    errcheck:
+      # Writes to stdout and deferred Close on read-only handles cannot
+      # meaningfully fail here; checking them adds noise, not safety.
+      exclude-functions:
+        - fmt.Fprint
+        - fmt.Fprintf
+        - fmt.Fprintln
+        - (*os.File).Close
+        - (io.ReadCloser).Close
+  exclusions:
+    rules:
+      - linters:
+          - unparam
+          - goconst
+          - dupl
+          - lll
+        path: (.+)_test.go

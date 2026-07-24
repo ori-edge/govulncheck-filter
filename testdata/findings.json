@@ -1,0 +1,5 @@
+{"config":{"protocol_version":"v1.0.0","scanner_name":"govulncheck"}}
+{"finding":{"osv":"GO-CALLED","fixed_version":"v1.2.3","trace":[{"module":"m1","function":"Vuln"},{"module":"m1"}]}}
+{"finding":{"osv":"GO-IMPORTED","fixed_version":"v0.9.0","trace":[{"module":"m2"}]}}
+{"finding":{"osv":"GO-CALLED","trace":[{"module":"m1"}]}}
+{"finding":{"osv":"GO-NOFIX","trace":[{"module":"m3","function":"Danger"}]}}

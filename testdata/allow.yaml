@@ -1,0 +1,5 @@
+allow:
+  - id: GO-CALLED
+    module: m1
+    review: 2026-08-01
+    reason: awaiting upstream fix

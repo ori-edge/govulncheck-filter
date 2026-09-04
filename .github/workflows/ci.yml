@@ -30,7 +30,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - name: Run unit tests
-        uses: ori-edge/oge-github-actions/go-unit-test@v0.25.7
+        uses: ori-edge/oge-github-actions/go-unit-test@v0.25.8
         with:
           unitTestCommand: go test -race ./...
           uploadToCodecov: false
